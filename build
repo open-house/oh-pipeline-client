@@ -1,0 +1,27 @@
+#!/bin/sh
+
+if [ $# -lt 1 ]
+then
+    echo "supply build number as the first argument"
+    exit 1
+fi
+
+build(){
+
+    POM=pom.xml
+    BKP_POM=pom.xml_bkp
+    VERSION=$1
+
+    # replace version in pom
+    cp ./$POM ./$BKP_POM
+    sed -i -e "s/\${VERSION}/$VERSION/g" ./$POM
+
+    # create target dir (binaries)
+    mvn clean install cobertura:cobertura
+
+    # revert pom back
+    mv $BKP_POM $POM
+}
+
+VERSION="0.1-$1"
+build $VERSION
