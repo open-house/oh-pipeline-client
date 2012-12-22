@@ -12,6 +12,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <oh.pipeline.domain.version>0.1-1</oh.pipeline.domain.version>
+        <jersey.version>1.16</jersey.version>
         <commons.lang3.version>3.1</commons.lang3.version>
         <slf4j.version>1.7.2</slf4j.version>
 
@@ -31,6 +33,18 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>sk.openhouse.automation</groupId>
+            <artifactId>oh-pipeline-domain</artifactId>
+            <version>${oh.pipeline.domain.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>${jersey.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
