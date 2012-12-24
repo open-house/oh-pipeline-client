@@ -8,5 +8,5 @@ import sk.openhouse.automation.pipelinedomain.domain.response.VersionsResponse;
  */
 public interface VersionClient {
 
-    VersionsResponse getVersions();
+    VersionsResponse getVersions(String projectName);
 }
