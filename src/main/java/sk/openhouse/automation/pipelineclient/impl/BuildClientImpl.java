@@ -28,9 +28,21 @@ public class BuildClientImpl implements BuildClient {
      */
     @Override
     public BuildsResponse getBuilds(String projectName, String versionNumber) {
+        return getBuilds(projectName, versionNumber, null);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BuildsResponse getBuilds(String projectName, String versionNumber, Integer limit) {
 
         String resource = String.format(resourceTemplate, projectName, versionNumber);
         WebResource webResource = client.resource(resource);
+
+        if (null != limit && limit > 0) {
+            webResource = webResource.queryParam("limit", Integer.toString(limit));
+        }
         return webResource.get(BuildsResponse.class);
     }
 }

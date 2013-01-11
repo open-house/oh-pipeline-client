@@ -12,8 +12,19 @@ public interface BuildClient {
      * @param versionNumber
      * @return all the builds for specified project and version
      * @throws UniformInterfaceException if the status of the HTTP response is greater than or equal to 300
-     * @throws ClientHandlerException if the client handler fails to process the request or response.;
+     * @throws ClientHandlerException if the client handler fails to process the request or response.
      */
     BuildsResponse getBuilds(String projectName, String versionNumber) 
+            throws UniformInterfaceException, ClientHandlerException;
+
+    /**
+     * @param projectName
+     * @param versionNumber
+     * @param limit max number of returned buils
+     * @return specified number (or less) of builds for specified project and version
+     * @throws UniformInterfaceException if the status of the HTTP response is greater than or equal to 300
+     * @throws ClientHandlerException if the client handler fails to process the request or response.
+     */
+    BuildsResponse getBuilds(String projectName, String versionNumber, Integer limit)
             throws UniformInterfaceException, ClientHandlerException;
 }
