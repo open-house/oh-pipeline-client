@@ -1,11 +1,10 @@
 package sk.openhouse.automation.pipelineclient.impl;
 
+import com.sun.jersey.api.client.*;
 import org.apache.commons.lang3.StringUtils;
 
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.WebResource;
-
 import sk.openhouse.automation.pipelineclient.ProjectClient;
+import sk.openhouse.automation.pipelinedomain.domain.request.ProjectRequest;
 import sk.openhouse.automation.pipelinedomain.domain.response.ProjectsResponse;
 
 public class ProjectClientImpl implements ProjectClient {
@@ -13,12 +12,14 @@ public class ProjectClientImpl implements ProjectClient {
     /** uri part to retrieve all builds */
     private static final String PROJECTS_URI_PART = "/projects";
 
-    private final WebResource webResource;
+    private final Client client;
+    private final WebResource projectsWebResource;
 
     public ProjectClientImpl(Client client, String host) {
 
+        this.client = client;
         host = StringUtils.removeEnd(host, "/");
-        webResource = client.resource(host + PROJECTS_URI_PART);
+        projectsWebResource = client.resource(host + PROJECTS_URI_PART);
     }
 
     /**
@@ -26,6 +27,19 @@ public class ProjectClientImpl implements ProjectClient {
      */
     @Override
     public ProjectsResponse getProjects() {
-        return webResource.get(ProjectsResponse.class);
+        return projectsWebResource.get(ProjectsResponse.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean addProject(String projectName) throws UniformInterfaceException, ClientHandlerException {
+
+        String projectsUri = StringUtils.removeEnd(projectsWebResource.getURI().toString(), "/");
+        WebResource projectWebResource = client.resource(String.format("%s/%s", projectsUri, projectName));
+        int responseCode = projectWebResource.put(ClientResponse.class).getStatus();
+
+        return (responseCode >= 200 && responseCode < 300);
     }
 }

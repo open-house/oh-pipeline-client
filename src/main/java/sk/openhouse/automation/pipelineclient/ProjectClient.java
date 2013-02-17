@@ -17,4 +17,11 @@ public interface ProjectClient {
      * @throws ClientHandlerException if the client handler fails to process the request or response.;
      */
     ProjectsResponse getProjects() throws UniformInterfaceException, ClientHandlerException;
+
+    /**
+     * @param projectName name of the project to be added
+     * @return true if the project has been added successfully (response code is between 200 - 299 range)
+     * @throws ClientHandlerException if the client handler fails to process the request or response.;
+     */
+    boolean addProject(String projectName) throws UniformInterfaceException, ClientHandlerException;
 }
